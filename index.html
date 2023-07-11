@@ -133,23 +133,21 @@
 
 <script>
 
-    let tasks = [
-        {
-            "title": "قراءة كتاب",
-            "date": "10/10/2030",
-            "isDone": true
-        },
-        {
-            "title": "انهاء المشروع النهائي",
-            "date": "10/10/2030",
-            "isDone": false
-        },
-        {
-            "title": "انهاء كورس الجافاسكريبت",
-            "date": "10/10/2030",
-            "isDone": true
+    let tasks = []
+    
+     // {
+        //     "title": "قراءة كتاب",
+        //     "date": "10/10/2030",
+        //     "isDone": true
+        // },
+
+        function getTasksFromStorage(){
+            let retrievedTasks = tasks =  JSON.parse(localStorage.getItem("tasks")) // tasks from storage
+            tasks = retrievedTasks ?? [] //let tasks = retrievedTasks but if its null go to the default value which is []
+
         }
-    ]
+
+        getTasksFromStorage()
 
     function fillTasksOnThePage() { //this function is the programming representation of the visual design
         document.getElementById("tasks").innerHTML = ""
@@ -233,6 +231,8 @@
                     "isDone": false
                 };
                 tasks.push(taskObject);
+                storeTasks()
+
                 fillTasksOnThePage();
             }
         });
@@ -264,6 +264,7 @@
         }).then((isConfirmed) => {
             if (isConfirmed) {
                 tasks.splice(index, 1);
+                storeTasks()
                 fillTasksOnThePage();
             }
         });
@@ -278,6 +279,7 @@
         }).then((value) => {
             if (value !== null) {
                 tasks[index].title = value;
+                storeTasks()
                 fillTasksOnThePage();
             }
         });
@@ -286,9 +288,20 @@
     function toggleTaskCompletion(index) {
         let task = tasks[index]
         task.isDone = !task.isDone
+        storeTasks()
         fillTasksOnThePage();
 
     }
+
+    // ============== STORAGE FUNCTIONS ============//
+    function storeTasks(){
+        let tasksString = JSON.stringify(tasks)
+        localStorage.setItem("tasks", tasksString)
+    }
+    // ============== STORAGE FUNCTIONS ============//
+
+
+
 </script>
 
 </html>
