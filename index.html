@@ -31,6 +31,11 @@
             transition: box-shadow 0.2s;
         }
 
+        /* The done class used to change the background color of the task if isDone = true */
+        .done {
+            background-color: rgb(158, 253, 160);
+        }
+
         .task:hover {
             box-shadow: 0px 3px 15px rgba(97, 97, 97, 0.843);
         }
@@ -132,7 +137,7 @@
         {
             "title": "قراءة كتاب",
             "date": "10/10/2030",
-            "isDone": false
+            "isDone": true
         },
         {
             "title": "انهاء المشروع النهائي",
@@ -142,18 +147,18 @@
         {
             "title": "انهاء كورس الجافاسكريبت",
             "date": "10/10/2030",
-            "isDone": false
+            "isDone": true
         }
     ]
 
-    function fillTasksOnThePage() {
+    function fillTasksOnThePage() { //this function is the programming representation of the visual design
         document.getElementById("tasks").innerHTML = ""
         let index = 0 // to give each button a specific number to now what task to edit, delete, and complete
         for (task of tasks) {
 
             let content =
                 `
-                    <div class="task">
+                    <div class="task ${task.isDone ? 'done' : ''}">
 
                             <!-- Task Info -->
                             <div style="width: 70%;">
@@ -175,11 +180,22 @@
                                     style="background-color:rgb(114, 0, 0) ; color: white;"><span class="material-symbols-outlined">
                                         delete
                                         </span></button>
-
-                                <button class="circular-btn"
-                                    style="background-color:rgb(9, 150, 30) ; color: white;"><span class="material-symbols-outlined">
-                                        done
+                                ${task.isDone ? `
+                                        <button onclick = "toggleTaskCompletion(${index})" class="circular-btn"
+                                            style="background-color:rgb(118, 0, 101) ; color: white;"><span class="material-symbols-outlined">
+                                            cancel
                                         </span></button>
+                                    
+                                    
+                                    ` : `
+                                <button onclick = "toggleTaskCompletion(${index})" class="circular-btn"
+                                    style="background-color:rgb(0, 150, 30) ; color: white;"><span class="material-symbols-outlined">
+                                        done
+                                </span></button>
+                                
+                                
+                                `}
+                                
 
                                 <button onclick = "editTask(${index})" class="circular-btn"
                                     style="background-color:rgba(0, 16, 197,0.692) ; color: white;"><span class="material-symbols-outlined">
@@ -265,6 +281,12 @@
                 fillTasksOnThePage();
             }
         });
+    }
+
+    function toggleTaskCompletion(index) {
+        let task = tasks[index]
+        task.isDone = !task.isDone
+        fillTasksOnThePage();
 
     }
 </script>
