@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>to do</title>
 
     <!-- External Libraries -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,6 @@
         .tasks-table {
             background-color: rgb(239, 239, 239);
             width: 60%;
-            /* height: 500px; */
             margin-top: 130px;
         }
 
@@ -135,12 +134,6 @@
 
     let tasks = []
     
-     // {
-        //     "title": "قراءة كتاب",
-        //     "date": "10/10/2030",
-        //     "isDone": true
-        // },
-
         function getTasksFromStorage(){
             let retrievedTasks = tasks =  JSON.parse(localStorage.getItem("tasks")) // tasks from storage
             tasks = retrievedTasks ?? [] //let tasks = retrievedTasks but if its null go to the default value which is []
@@ -151,7 +144,7 @@
 
     function fillTasksOnThePage() { //this function is the programming representation of the visual design
         document.getElementById("tasks").innerHTML = ""
-        let index = 0 // to give each button a specific number to now what task to edit, delete, and complete
+        let index = 0 // to give each button a specific number to know what task to edit, delete, and complete
         for (task of tasks) {
 
             let content =
